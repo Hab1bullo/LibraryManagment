@@ -11,7 +11,7 @@ export const orderValid = (body) => {
                 quantity: Joi.number().integer().positive().required()
             })
         ).required(),
-        totalPrice: Joi.number().precision(2).positive().required(),
+        totalPrice: Joi.number().positive().required(),
         status: Joi.string().valid('pending', 'completed', 'canceled').required(),
     });
 

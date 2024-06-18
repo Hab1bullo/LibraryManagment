@@ -7,11 +7,11 @@ export const bookvalid = (body) => {
         title: Joi.string().required(),
         authorId: Joi.string().guid({ version: 'uuidv4' }).required(),
         genreId: Joi.string().guid({ version: 'uuidv4' }).required(),
-        price: Joi.number().precision(2).positive().required(),
-        stock: Joi.number().integer().required(),
+        price: Joi.number().positive().required(),
+        stock: Joi.number().positive().required(),
         publishedDate: Joi.date().iso().required(),
         status: Joi.string().valid('available', 'out of stock', 'discontinued').required(),
-        imageUrls: Joi.array().items(Joi.string().uri()).required(),
+        imageUrls: Joi.array().items(Joi.string()).required(),
         description: Joi.string().required()
       });
 
