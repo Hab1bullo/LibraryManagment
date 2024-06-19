@@ -1,4 +1,4 @@
-import { deleteOneVarchar, getAll, getOneVarchar, insertMany, putmany } from "../services/universal.service.js";
+import { deleteOneVarchar, getAll, getOne, insertMany, putmany } from "../services/universal.service.js";
 import { genreValid } from "../validation/genre.valid.js";
 import { v4 as uuidv4} from 'uuid';
 
@@ -48,7 +48,7 @@ export const oneGenres = async (req, res) => {
         
         const { uuid } = req.params;
 
-        const genre = await getOneVarchar('genres', 'uuid', uuid);
+        const genre = await getOne('genres', 'uuid', uuid);
 
         if(!genre.length){
             return res.status(200).send({
@@ -77,7 +77,7 @@ export const putOneGenre = async (req, res) => {
         const { name, description } = req.body;
         const { uuid } = req.params;
 
-        const genre = await getOneVarchar('genres', 'uuid', uuid);
+        const genre = await getOne('genres', 'uuid', uuid);
 
         if(!genre.length){
             return res.status(400).send({
@@ -109,7 +109,7 @@ export const deleteOneGenre = async (req, res) => {
         
         const { uuid } = req.params;
 
-        const genre = await getOneVarchar('genres', 'uuid', uuid);
+        const genre = await getOne('genres', 'uuid', uuid);
 
         if(!genre.length){
             return res.status(400).send({

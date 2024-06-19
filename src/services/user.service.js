@@ -1,7 +1,7 @@
 import { pool } from "../config/pgdb.js";
 import { sendOtptoEmail } from "../utils/email.js";
 import { hashPassword } from "../utils/hash.js";
-import { getOneVarchar, insertMany } from "./universal.service.js";
+import { getOne, insertMany } from "./universal.service.js";
 import otpgen from 'otp-generator';
 import { v4 as uuidv4 } from 'uuid'
 
@@ -15,7 +15,7 @@ export const userRegister = async (body) => {
         const { email, username, password, role } = body;
 
         // Option 1
-        // const query0 = await getOneVarchar('users', 'email', email);
+        // const query0 = await getOne('users', 'email', email);
         // if (query0.length) {
         //     return result = {
         //         user: "User already exists"

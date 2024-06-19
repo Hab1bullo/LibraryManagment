@@ -1,37 +1,13 @@
 import { pool } from "../config/pgdb.js"
 
-/**
- * 
- * @param {string} table 
- * @param {string} column 
- * @param {string} columnElem -> column type varchar
- * @returns 
- */
-export const getOneVarchar = async (table, column, columnElem) => {
+
+
+
+export const getOne = async (table, column, columnElem) => {
     try {
 
-        const query = `SELECT * FROM ${table} WHERE ${column} = '${columnElem}';`
-        const res = await pool.query(query);
-        return res.rows
-
-    } catch (err) {
-        throw err
-    }
-}
-
-/**
- * 
- * @param {string} table 
- * @param {string} column 
- * @param {string} columnElem -> column type varchar
- * @returns 
- * 
- */
-export const getOneInt = async (table, column, columnElem) => {
-    try {
-
-        const query = `SELECT * FROM ${table} WHERE ${column} = ${columnElem};`
-        const res = await pool.query(query);
+        const query = `SELECT * FROM ${table} WHERE ${column} = $1;`
+        const res = await pool.query(query, [columnElem]);
         return res.rows
 
     } catch (err) {
@@ -40,12 +16,8 @@ export const getOneInt = async (table, column, columnElem) => {
 }
 
 
-/**
- * 
- * @param {string} table 
- * @returns 
- * 
- */
+
+
 export const getAll = async (table) => {
     try {
 
@@ -59,17 +31,7 @@ export const getAll = async (table) => {
 }
 
 
-/**
- * 
- * @param {string} table 
- * @param {string} putTable 
- * @param {string} newelem 
- * @param {string} column 
- * @param {string} columnElem -> must be string
- * @returns 
- * 
- * 
- */
+
 export const putOne = async (table, putTable, newelem, column, columnElem) => {
     try {
 
@@ -108,24 +70,18 @@ export const putmany = async (table, columns, newValue, where, whereElem) => {
 
         const generat = (columns, values) => {
             let str = ''
-            if (typeof values[0] == 'number') {
-                str += columns[0] + " = " + values[0];
-            } else {
-                str += columns[0] + " = " + `'${values[0]}'`;
-            }
+            if (columns.length != values.length) throw new Error("Column and values length not equal");
+
+            str += columns[0] + " = " + "$1";
+
             for (let i = 0; i < columns.length; i++) {
                 if (i > 0) {
-                    const type = typeof values[i];
-
-                    if (type == 'number' || type == 'boolean') {
-                        str += ', ' + columns[i] + " = " + values[i];
-                    } else {
-                        str += ', ' + columns[i] + " = " + `'${values[i]}'`;
-                    }
+                    str += ', ' + columns[i] + " = " + `$${i + 1}`;
                 }
             }
-            return str
+            return str;
         };
+
 
         const cleardata = filterData(newValue)
         const gencolumn = generat(columns, cleardata);
@@ -136,8 +92,7 @@ export const putmany = async (table, columns, newValue, where, whereElem) => {
         }
 
         const query = `UPDATE ${table} SET ${gencolumn}  WHERE ${where} = ${whereElem} RETURNING *;`
-
-        const res = await pool.query(query);
+        const res = await pool.query(query, cleardata);
         return res.rows
 
     } catch (err) {
@@ -145,38 +100,10 @@ export const putmany = async (table, columns, newValue, where, whereElem) => {
     }
 }
 
-
-export const deleteOneVarchar = async (table, column, columnElem) => {
-    try {
-
-        const query = `DELETE FROM ${table} WHERE ${column} = '${columnElem}' RETURNING *;`
-        const res = await pool.query(query);
-        return res.rows
-
-    } catch (err) {
-        throw err
-    }
-}
-
-export const deleteOneInt = async (table, column, columnElem) => {
-    try {
-
-        const query = `DELETE FROM ${table} WHERE ${column} = ${columnElem} RETURNING *;`
-        const res = await pool.query(query);
-        return res.rows
-
-    } catch (err) {
-        throw err
-    }
-}
 
 export const insertMany = async (table, columnArr, valueArr) => {
     try {
-        /**
-         * 
-         * @param {object} > array
-         * @returns {string} string
-         */
+
         const replace = (arr) => {
             let str = arr[0];
             for (let i = 1; i < arr.length; i++) {
@@ -222,5 +149,30 @@ export const dropTable = async (table) => {
 
     } catch (e) {
         throw e
+    }
+}
+
+
+export const deleteOneVarchar = async (table, column, columnElem) => {
+    try {
+
+        const query = `DELETE FROM ${table} WHERE ${column} = '${columnElem}' RETURNING *;`
+        const res = await pool.query(query);
+        return res.rows
+
+    } catch (err) {
+        throw err
+    }
+}
+
+export const deleteOneInt = async (table, column, columnElem) => {
+    try {
+
+        const query = `DELETE FROM ${table} WHERE ${column} = ${columnElem} RETURNING *;`
+        const res = await pool.query(query);
+        return res.rows
+
+    } catch (err) {
+        throw err
     }
 }

@@ -1,5 +1,5 @@
 import { compare } from "bcrypt";
-import { deleteOneVarchar, getOneVarchar, insertMany, putmany } from "../services/universal.service.js";
+import { deleteOneVarchar, getOne, insertMany, putmany } from "../services/universal.service.js";
 import { userRegister } from "../services/user.service.js";
 import { sendOtptoEmail } from "../utils/email.js";
 import { accessTokenGenerator, refreshTokenGenerator, tokenVerifyRefresh } from "../utils/jwt.js";
@@ -41,7 +41,7 @@ export const verifyOtp = async (req, res) => {
         const { uuid, otp } = req.body;
         otpvalid(req.body);
 
-        const userotp = await getOneVarchar('userotps', 'uuid', uuid);
+        const userotp = await getOne('userotps', 'uuid', uuid);
 
         if (!userotp.length) {
             return res.status().send({
@@ -76,7 +76,7 @@ export const login = async (req, res) => {
     try {
         userLoginValid(req.body);
         const { email, password } = req.body;
-        const user = await getOneVarchar('users', 'email', email);
+        const user = await getOne('users', 'email', email);
 
         if (!user.length) {
             return res.status(400).send({
@@ -120,7 +120,7 @@ export const getMe = async (req, res) => {
 
         const { email, username } = req.user;
 
-        const user = await getOneVarchar('users', 'email', email);
+        const user = await getOne('users', 'email', email);
         delete user[0].password;
         return res.status(200).send({
             message: "Ok",
@@ -165,7 +165,7 @@ export const refreshtoken = async (req, res) => {
 
         const tokenInfo = tokenVerifyRefresh(refreshToken);
 
-        const user = await getOneVarchar('users', 'email', tokenInfo.email);
+        const user = await getOne('users', 'email', tokenInfo.email);
 
         if (!user.length) {
             return res.status(200).send({

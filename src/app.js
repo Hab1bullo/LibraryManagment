@@ -63,7 +63,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(logMiddleware);
 app.get('/setup', createTables);
 app.delete('/deletetable', deleteTable);
-app.use(router);
+app.use('/api',router);
 
 
 

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { authorvalid } from '../validation/author.valid.js';
-import { deleteOneVarchar, getAll, getOneVarchar, insertMany, putmany } from '../services/universal.service.js';
+import { deleteOneVarchar, getAll, getOne, insertMany, putmany } from '../services/universal.service.js';
 
 
 export const postAuthor = async (req, res) => {
@@ -50,7 +50,7 @@ export const getOneAuthor = async (req, res) => {
 
         const { uuid } = req.params;
 
-        const author = await getOneVarchar('authors', 'uuid', uuid);
+        const author = await getOne('authors', 'uuid', uuid);
 
         if (!author.length) {
             return res.status(400).send({
@@ -80,7 +80,7 @@ export const putOneAuthor = async (req, res) => {
         const { name, bio, birthdate } = req.body;
         const { uuid } = req.params;
 
-        const author = await getOneVarchar('authors', 'uuid', uuid);
+        const author = await getOne('authors', 'uuid', uuid);
 
         if(!author.length){
             return res.status(400).send({
@@ -110,7 +110,7 @@ export const deleteOneAuthor = async (req, res) => {
     try {
         
         const { uuid } = req.params;
-        const author = await getOneVarchar('authors', 'uuid', uuid);
+        const author = await getOne('authors', 'uuid', uuid);
 
         if(!author.length){
             return res.status(200).send({

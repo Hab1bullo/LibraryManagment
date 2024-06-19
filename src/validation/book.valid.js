@@ -5,17 +5,17 @@ export const bookvalid = (body) => {
 
     const bookSchema = Joi.object({
         title: Joi.string().required(),
-        authorId: Joi.string().guid({ version: 'uuidv4' }).required(),
-        genreId: Joi.string().guid({ version: 'uuidv4' }).required(),
+        author_id: Joi.string().guid({ version: 'uuidv4' }).required(),
+        genre_id: Joi.string().guid({ version: 'uuidv4' }).required(),
         price: Joi.number().positive().required(),
         stock: Joi.number().positive().required(),
-        publishedDate: Joi.date().iso().required(),
+        published_date: Joi.date().iso().required(),
         status: Joi.string().valid('available', 'out of stock', 'discontinued').required(),
-        imageUrls: Joi.array().items(Joi.string()).required(),
+        image_urls: Joi.array().items(Joi.string()).required(),
         description: Joi.string().required()
       });
 
-      const { error, value } = orderSchema.validate(body);
+      const { error, value } = bookSchema.validate(body);
 
     if (error) {
         throw error.details;
@@ -23,3 +23,5 @@ export const bookvalid = (body) => {
         return value
     }
 }
+
+

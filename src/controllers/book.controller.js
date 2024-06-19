@@ -1,30 +1,148 @@
 import { v4 as uuidv4 } from 'uuid'
+import { bookvalid } from '../validation/book.valid.js';
+import { deleteOneVarchar, getAll, getOne, insertMany, putmany } from '../services/universal.service.js';
 
 
-
-
-const book = {
-    "title": "Some Book Title",
-    "authorId": "123e4567-e89b-12d3-a456-426614174000",
-    "genreId": "123e4567-e89b-12d3-a456-426614174000",
-    "price": 19.99,
-    "stock": 10,
-    "publishedDate": "2023-06-18",
-    "status": "available",
-    "imageUrls": ["https://example.com/image1.jpg", "https://example.com/image2.jpg"],
-    "description": "This is a description of the book."
-};
 
 
 export const postBook = async (req, res) => {
     try {
         const uuid = uuidv4();
+        bookvalid();
 
+        const { title, author_id, genre_id, price, stock, published_date, status, image_urls, description } = req.body;
 
+        const column = ['uuid','title', 'author_id', 'genre_id', 'price', 'stock', 'published_date', 'status', 'image_urls', 'description'];
+        const value = [uuid, title, author_id, genre_id, price, stock, published_date, status, image_urls, description]
 
+        const insertedBook = await insertMany('books', column, value);
+
+        return res.status(200).send({
+            message: "Book added", 
+            addedBook: insertedBook[0]
+        });
 
     } catch (e) {
         console.log(e);
+        return res.status(500).send({
+            message: "Server Error",
+            error: e
+        });
+    }
+}
+
+
+
+export const allbooks = async (req, res) =>{
+    try {
+        
+        const books = await getAll('books');
+
+        return res.status(200).send({
+            books: books
+        });
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send({
+            message: "Server Error",
+            error: e
+        });
+    }
+}
+
+
+export const oneBook = async (req, res) => {
+    try {
+        const {uuid} = req.params;
+
+
+        const book = await getOne('books', 'uuid', uuid);
+
+
+        if(!book.length){
+            return res.status(400).send({
+                message: "Book not found"
+            });
+        };
+
+        return res.status(200).send({
+            message: "Ok", 
+            book: book[0]
+        });
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send({
+            message: "Server Error",
+            error: e
+        });
+    }
+}
+
+
+export const putOneBook = async (req, res) => {
+    try {
+        const { uuid } = req.params
+        bookvalid(req.body);
+
+
+        const book = await getOne("books", 'uuid', uuid);
+
+
+        if(!book.length) {
+            return res.status(400).send({
+                message: "Book not found"
+            });
+        };
+
+        const { title, author_id, genre_id, price, stock, published_date, status, image_urls, description } = req.body;
+        const column = ['title', 'author_id', 'genre_id', 'price', 'stock', 'published_date', 'status', 'image_urls', 'description'];
+        const value = [title, author_id, genre_id, price, stock, published_date, status, image_urls, description]
+
+
+        const updatedBook = await putmany('books', column, value, 'uuid', uuid);
+
+
+        return res.status(200).send({
+            message: "Book updated",
+            bookid: uuid,
+            updatedBook: updatedBook[0]
+        });
+
+    } catch (e) {
+        console.log(e)
+        return res.status(500).send({
+            message: "Server Error",
+            error: e
+        });
+    };
+};
+
+export const deleteOneBook = async (req, res) => {
+    try {
+        const { uuid } = req.params
+
+
+        const book = await getOne("books", 'uuid', uuid);
+
+
+        if(!book.length) {
+            return res.status(400).send({
+                message: "Book not found"
+            });
+        };
+
+        const deletedBook = await deleteOneVarchar("books", 'uuid', uuid);
+
+        return res.status(200).send({
+            message: "Book deleted",
+            deletedBook: deletedBook[0]
+        });
+
+
+    } catch (e) {
+        console.log(e)
         return res.status(500).send({
             message: "Server Error",
             error: e
