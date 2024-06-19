@@ -18,6 +18,7 @@ export const postGenre = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -36,6 +37,7 @@ export const allGenres = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -63,6 +65,7 @@ export const oneGenres = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -95,6 +98,7 @@ export const putOneGenre = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -126,6 +130,7 @@ export const deleteOneGenre = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e

@@ -29,7 +29,8 @@ export const postOrder = async (req, res) => {
         });
 
     } catch (e) {
-        console.log(e)
+        console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -49,7 +50,8 @@ export const getAllOrder = async (req, res) => {
         });
 
     } catch (e) {
-        console.log(e)
+        console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -77,7 +79,8 @@ export const getOneOrder = async (req, res) => {
 
 
     } catch (e) {
-        console.log(e)
+        console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -111,7 +114,8 @@ export const putOneOrder = async (req, res) => {
         });
 
     } catch (e) {
-        console.log(e)
+        console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -140,7 +144,8 @@ export const deleteOneOrder = async (req, res) => {
         });
 
     } catch (e) {
-        console.log(e)
+        console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e

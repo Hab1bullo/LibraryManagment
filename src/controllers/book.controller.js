@@ -24,6 +24,7 @@ export const postBook = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -44,6 +45,7 @@ export const allbooks = async (req, res) =>{
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -73,6 +75,7 @@ export const oneBook = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -111,7 +114,8 @@ export const putOneBook = async (req, res) => {
         });
 
     } catch (e) {
-        console.log(e)
+        console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -142,7 +146,8 @@ export const deleteOneBook = async (req, res) => {
 
 
     } catch (e) {
-        console.log(e)
+        console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e

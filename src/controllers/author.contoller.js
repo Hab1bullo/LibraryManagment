@@ -20,6 +20,7 @@ export const postAuthor = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -38,6 +39,7 @@ export const getAllAuthors = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -65,6 +67,7 @@ export const getOneAuthor = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -98,6 +101,7 @@ export const putOneAuthor = async (req, res) => {
 
     } catch (error) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -127,6 +131,7 @@ export const deleteOneAuthor = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e

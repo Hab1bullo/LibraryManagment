@@ -26,6 +26,7 @@ export const createTables = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(200).send({
             message: "Error creating table",
             error: e
@@ -44,6 +45,7 @@ export const deleteTable = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(200).send({
             message: "Error creating table",
             error: e

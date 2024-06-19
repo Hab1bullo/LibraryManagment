@@ -28,6 +28,7 @@ export const postUser = async (req, res) => {
 
     } catch (e) {
         console.log(e)
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -63,7 +64,8 @@ export const verifyOtp = async (req, res) => {
 
 
     } catch (e) {
-        console.log(e)
+        console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -106,7 +108,8 @@ export const login = async (req, res) => {
         });
 
     } catch (e) {
-        console.log(e)
+        console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -129,6 +132,7 @@ export const getMe = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -150,6 +154,7 @@ export const logout = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
@@ -190,6 +195,7 @@ export const refreshtoken = async (req, res) => {
 
     } catch (e) {
         console.log(e);
+        errorLogger.error(e);
         return res.status(500).send({
             message: "Server Error",
             error: e
