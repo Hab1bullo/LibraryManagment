@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { bookvalid } from '../validation/book.valid.js';
-import { deleteOneVarchar, getAll, getOne, insertMany, putmany } from '../services/universal.service.js';
+import { deleteOneVarchar, getAll, getOne, insertMany, putMany } from '../services/universal.service.js';
 
 
 
@@ -101,7 +101,7 @@ export const putOneBook = async (req, res) => {
         const value = [title, author_id, genre_id, price, stock, published_date, status, image_urls, description]
 
 
-        const updatedBook = await putmany('books', column, value, 'uuid', uuid);
+        const updatedBook = await putMany('books', column, value, 'uuid', uuid);
 
 
         return res.status(200).send({

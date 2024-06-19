@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { authorvalid } from '../validation/author.valid.js';
-import { deleteOneVarchar, getAll, getOne, insertMany, putmany } from '../services/universal.service.js';
+import { deleteOneVarchar, getAll, getOne, insertMany, putMany } from '../services/universal.service.js';
 
 
 export const postAuthor = async (req, res) => {
@@ -88,7 +88,7 @@ export const putOneAuthor = async (req, res) => {
             });
         }
 
-        const updatedAuthor = await putmany('authors', ['name', 'bio', 'birthdate'], [name, bio, birthdate], 'uuid', uuid);
+        const updatedAuthor = await putMany('authors', ['name', 'bio', 'birthdate'], [name, bio, birthdate], 'uuid', uuid);
 
         return res.status(200).send({
             uuid: uuid,

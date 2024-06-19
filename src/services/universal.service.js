@@ -44,7 +44,7 @@ export const putOne = async (table, putTable, newelem, column, columnElem) => {
     }
 }
 
-export const putmany = async (table, columns, newValue, where, whereElem) => {
+export const putMany = async (table, columns, newValue, where, whereElem) => {
     try {
 
         const filterData = function (arr) {

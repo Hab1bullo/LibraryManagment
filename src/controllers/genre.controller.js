@@ -1,4 +1,4 @@
-import { deleteOneVarchar, getAll, getOne, insertMany, putmany } from "../services/universal.service.js";
+import { deleteOneVarchar, getAll, getOne, insertMany, putMany } from "../services/universal.service.js";
 import { genreValid } from "../validation/genre.valid.js";
 import { v4 as uuidv4} from 'uuid';
 
@@ -85,7 +85,7 @@ export const putOneGenre = async (req, res) => {
             });
         }
 
-        const updatedGenre = await putmany('genres', ['name', 'description'], [name, description], 'uuid', uuid);
+        const updatedGenre = await putMany('genres', ['name', 'description'], [name, description], 'uuid', uuid);
 
         return res.status(200).send({
             message: "Genre updated",

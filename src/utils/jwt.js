@@ -4,12 +4,12 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const accessTokenGenerator = (data) => {
-  const accesToken = jwt.sign(data, process.env.ACCESS_SECRETKEY, { expiresIn: '10m' })
+  const accesToken = jwt.sign(data, process.env.ACCESS_SECRETKEY, { expiresIn: '1d' });
   return accesToken;
 }
 
 export const refreshTokenGenerator = (data) => {
-  const accesToken = jwt.sign(data, process.env.REFRESH_SECRETKEY, { expiresIn: '30d' })
+  const accesToken = jwt.sign(data, process.env.REFRESH_SECRETKEY, { expiresIn: '30d' });
   return accesToken
 }
 

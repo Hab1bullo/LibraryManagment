@@ -1,10 +1,10 @@
 import { compare } from "bcrypt";
-import { deleteOneVarchar, getOne, insertMany, putmany } from "../services/universal.service.js";
+import { deleteOneVarchar, getOne, insertMany, putMany } from "../services/universal.service.js";
 import { userRegister } from "../services/user.service.js";
 import { sendOtptoEmail } from "../utils/email.js";
 import { accessTokenGenerator, refreshTokenGenerator, tokenVerifyRefresh } from "../utils/jwt.js";
-import { otpvalid, userLoginValid, userValidation } from "../validation/user.valid.js";
-
+import { userLoginValid, userValidation } from "../validation/user.valid.js";
+import { otpvalid } from "../validation/otp.valid.js";
 
 
 export const postUser = async (req, res) => {
@@ -50,7 +50,7 @@ export const verifyOtp = async (req, res) => {
         }
 
         if (userotp[0].otp == otp) {
-            await putmany('users', ['status'], ['active'], 'uuid', uuid);
+            await putMany('users', ['status'], ['active'], 'uuid', uuid);
             await deleteOneVarchar('userotps', 'uuid', uuid);
             return res.status(200).send({
                 message: "Otp verifyed"
@@ -142,7 +142,7 @@ export const logout = async (req, res) => {
         const { email, username } = req.user;
 
         await deleteOneVarchar('refreshtoken', 'email', email);
-        await putmany('users', ['status'], ['inactive'], 'email', email);
+        await putMany('users', ['status'], ['inactive'], 'email', email);
 
         return res.status(200).send({
             message: "Logout",
@@ -181,7 +181,7 @@ export const refreshtoken = async (req, res) => {
         const refresh = refreshTokenGenerator(payload);
 
 
-        await putmany('refreshtoken', ['token'], [refresh], 'email', user[0].email);
+        await putMany('refreshtoken', ['token'], [refresh], 'email', user[0].email);
 
         return res.status(200).send({
             accessToken: access,

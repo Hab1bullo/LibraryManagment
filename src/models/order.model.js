@@ -5,11 +5,11 @@ export const orderModel = async () => {
         
         const query = `
         CREATE TABLE IF NOT EXISTS orders (
-            id UUID PRIMARY KEY,
+            uuid UUID PRIMARY KEY,
             user_id UUID NOT NULL,
             items JSONB NOT NULL,
             total_price DECIMAL(10, 2) NOT NULL,
-            status VARCHAR(20) CHECK (status IN ('pending', 'completed', 'canceled')) NOT NULL,
+            status VARCHAR(20) CHECK (status IN ('pending', 'completed', 'canceled')) DEFAULT 'pending',
             created_at TIMESTAMPTZ DEFAULT NOW(),
             updated_at TIMESTAMPTZ DEFAULT NOW()
         );
