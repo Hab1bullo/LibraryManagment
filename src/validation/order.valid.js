@@ -30,7 +30,7 @@ export const orderValidForUpdate = (body) => {
                 quantity: Joi.number().integer().positive().required()
             })
         ).required(),
-        status: Joi.string().valid('pending', 'completed', 'canceled').optional()
+        status: Joi.string().optional().valid('pending', 'completed', 'canceled')
     });
 
     const { error, value } = schema.validate(body);
