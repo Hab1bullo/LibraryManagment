@@ -1,4 +1,5 @@
 import { deleteOneVarchar, getAll, getOne, insertMany, putMany } from "../services/universal.service.js";
+import { errorLogger } from "../utils/logs.js";
 import { genreValid } from "../validation/genre.valid.js";
 import { v4 as uuidv4} from 'uuid';
 

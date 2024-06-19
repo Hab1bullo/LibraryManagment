@@ -10,12 +10,14 @@ export const app = express()
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/setup', createTables);
+app.delete('/deletetable', deleteTable);
+
+
 app.use(logMiddleware);
 
 app.use('/api',router);
 
-app.get('/setup', createTables);
-app.delete('/deletetable', deleteTable);
 
 
 

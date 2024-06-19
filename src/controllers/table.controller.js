@@ -6,6 +6,7 @@ import { refreshModel } from "../models/refreshtoken.model.js";
 import { userTable } from "../models/user.model.js";
 import { otpmodel } from "../models/userOtp.model.js";
 import { dropTable } from "../services/universal.service.js";
+import { errorLogger } from "../utils/logs.js";
 
 
 export const createTables = async (req, res) => {

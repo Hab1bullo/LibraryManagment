@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { bookvalid } from '../validation/book.valid.js';
 import { deleteOneVarchar, getAll, getOne, insertMany, putMany } from '../services/universal.service.js';
+import { errorLogger } from '../utils/logs.js';
 
 
 

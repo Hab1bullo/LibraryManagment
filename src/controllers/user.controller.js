@@ -5,6 +5,7 @@ import { sendOtptoEmail } from "../utils/email.js";
 import { accessTokenGenerator, refreshTokenGenerator, tokenVerifyRefresh } from "../utils/jwt.js";
 import { userLoginValid, userValidation } from "../validation/user.valid.js";
 import { otpvalid } from "../validation/otp.valid.js";
+import { errorLogger } from "../utils/logs.js";
 
 
 export const postUser = async (req, res) => {
