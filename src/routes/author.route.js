@@ -10,3 +10,5 @@ authorRouter.get('/authors', userMiddleware, getAllAuthors);
 authorRouter.get('/authors/:uuid', userMiddleware, getOneAuthor);
 authorRouter.put('/authors/:uuid', userMiddleware, roleGuard(['admin', 'superadmin']), putOneAuthor);
 authorRouter.delete('/authors/:uuid', userMiddleware, roleGuard(['admin', 'superadmin']), deleteOneAuthor);
+
+

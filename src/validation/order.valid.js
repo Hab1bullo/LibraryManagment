@@ -7,7 +7,7 @@ export const orderValid = (body) => {
         items: Joi.array().items(
             Joi.object({
                 bookId: Joi.string().guid({ version: 'uuidv4' }).required(),
-                quantity: Joi.number().integer().positive().required()
+                quantity: Joi.number().positive().integer().required()
             })
         ).required(),
     });
