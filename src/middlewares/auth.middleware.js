@@ -13,6 +13,13 @@ export const userMiddleware = async (req, res, next) => {
                 error: "Access denied"
             });
         };
+
+        if(token == false){
+            return res.status(403).send({
+                message: "Authentication failed"
+            });
+        };
+        
         const decoded =  tokenVerify(token);
         req.user = decoded
         next();

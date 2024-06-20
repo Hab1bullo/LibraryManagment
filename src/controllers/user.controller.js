@@ -151,6 +151,7 @@ export const logout = async (req, res) => {
 
         return res.status(200).send({
             message: "Logout",
+            accessToken: false
         });
 
     } catch (e) {
